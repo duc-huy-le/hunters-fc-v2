@@ -1,0 +1,4 @@
+:host ::ng-deep nz-result-unauthorized {
+  display: flex;
+  justify-content: center;
+}

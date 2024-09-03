@@ -1,0 +1,19 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="closeModal()">
+    <ng-template #modalTitle>Tính năng mới!</ng-template>
+
+    <ng-template #modalContent>
+        <img class="my-[-60px]" src="https://i.postimg.cc/wvD5qXZB/Forum-Feature.png" alt="Tính năng forum">
+        <div class="text-center text-[23px]"><b>Tính năng forum đã có trên ASMLink</b></div>
+        <p> Từ giờ bạn có thể khai thác tiềm năng vô hạn từ tất cả các cộng
+            đồng!</p>
+        <div class="flex gap-3 mt-3">
+            <button class="w-1/2" nz-button nzType="default" nzSize="large" routerLink="/create-community">Tạo cộng đồng mới</button>
+            <button class="w-1/2" nz-button nzType="primary" nzSize="large" routerLink="/forum/community/123">Khám phá ngay</button>
+        </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="closeModal()">Đóng</button>
+    </ng-template>
+</nz-modal>

@@ -1,0 +1,305 @@
+<nz-modal
+  [(nzVisible)]="isVisibleAddTicketForm"
+  nzTitle="Đề xuất hợp tác"
+  (nzOnCancel)="handleCancelTicket()"
+  [nzCancelText]="'Hủy'"
+  (nzOnOk)="handleAddTicket()"
+  nzWidth="70vw"
+  [nzOkText]="'Gửi đề xuất'"
+>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <form nz-form [formGroup]="ticketForm" [nzLayout]="'vertical'">
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzFor="projectName">Dự án:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập tiêu đề!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="projectName"
+                      nz-input
+                      formControlName="projectName"
+                      placeholder="Dự án"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzFor="projectHomepage"
+                  >Trang chủ:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập tiêu đề!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="projectHomepage"
+                      nz-input
+                      formControlName="projectHomepage"
+                      placeholder="Trang chủ"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="cpc"
+                  >CPC mong muốn (CPC hiện tại là
+                  {{ adsOffer?.cpc | number }}đ):</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập giá CPC!">
+                  <nz-input-number
+                    class="w-full"
+                    id="cpc"
+                    [nzMin]="100"
+                    [nzStep]="10000"
+                    [nzFormatter]="formatterVnd"
+                    [nzParser]="parserVnd"
+                    nzPlaceHolder="Nhập giá CPC bạn muốn thương lượng"
+                    formControlName="cpc"
+                  ></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="devices"
+                  >Thiết bị mong muốn:</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-select
+                    nzMode="multiple"
+                    nzPlaceHolder="Chọn những thiết bị bạn mong muốn"
+                    formControlName="devices"
+                  >
+                    <nz-option
+                      *ngFor="let device of deviceList"
+                      [nzLabel]="device.label"
+                      [nzValue]="device.value"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="keywords"
+                  >Từ khóa mong muốn:</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-select
+                    nzMode="tags"
+                    nzPlaceHolder="Nhập những từ khóa bạn mong muốn"
+                    formControlName="keywords"
+                  >
+                    <nz-option
+                      *ngFor="let keyword of keywordList"
+                      [nzLabel]="keyword"
+                      [nzValue]="keyword"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="countries"
+                  >Quốc gia mong muốn:</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-select
+                    nzMode="tags"
+                    nzPlaceHolder="Nhập những quốc gia bạn mong muốn"
+                    formControlName="countries"
+                  >
+                    <nz-option
+                      *ngFor="let country of countryList"
+                      [nzLabel]="country"
+                      [nzValue]="country"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzFor="refLink">Link ref của bạn:</nz-form-label>
+                <nz-form-control>
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="refLink"
+                      nz-input
+                      formControlName="refLink"
+                      placeholder="Link ref có thể nhập khi 2 bên đã đồng ý hợp tác"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <!-- <div nz-row nzGutter="16">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="name"
+                  >Tiêu đề sản phẩm ads:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập tiêu đề!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="name"
+                      nz-input
+                      formControlName="name"
+                      placeholder="Nhập tiêu đề"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="campaignId"
+                  >ID chiến dịch google ads:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập id chiến dịch!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="campaignId"
+                      nz-input
+                      formControlName="campaignId"
+                      placeholder="Nhập id chiến dịch google ads"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="campaignId"
+                  >Trạng thái:</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-tag [nzColor]="'orange'">Chờ duyệt</nz-tag>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="projectName"
+                  >Dự án:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="projectName"
+                      nz-input
+                      formControlName="projectName"
+                      placeholder="Nhập dự án định chạy"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="projectHomepage"
+                  >Link trang chủ:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập link trang chủ!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="projectHomepage"
+                      nz-input
+                      formControlName="projectHomepage"
+                      placeholder="Nhập link trang chủ dự án"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="minimumCommittedDays"
+                  >Số ngày chạy tối thiểu cam kết:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-number
+                    class="w-full"
+                    id="minimumCommittedDays"
+                    [nzMin]="1"
+                    [nzStep]="10"
+                    formControlName="minimumCommittedDays"
+                  ></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="minimumBudget"
+                  >Số ngân sách tối thiểu:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-number
+                    class="w-full"
+                    id="minimumBudget"
+                    [nzMin]="1000"
+                    [nzStep]="100000"
+                    formControlName="minimumBudget"
+                  ></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="cpc"
+                  >CPC mong muốn:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập giá CPC!">
+                  <nz-input-number
+                    class="w-full"
+                    id="cpc"
+                    [nzMin]="1000"
+                    [nzStep]="100000"
+                    formControlName="cpc"
+                  ></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="note">Ghi chú:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <textarea
+                    id="note"
+                    nz-input
+                    placeholder="Nhập ghi chú"
+                    formControlName="note"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div> -->
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

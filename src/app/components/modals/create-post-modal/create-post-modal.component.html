@@ -1,0 +1,44 @@
+<div *ngIf="isVisible" class="create_post_modal_container h-full fixed top-0 left-0 right-0">
+    <div class="mt-[136px] flex justify-center">
+        <div class="content_layout mt-[8px] flex gap-6">
+            <div class="flex_fill">
+                <div class="bg-white py-3 px-5 rounded-xl shadow-md">
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <nz-avatar nzSize="small" nzIcon="user"></nz-avatar>
+                        </div>
+                        <div class="text-[16px]">
+                            <b>{{userInfo?.name }}</b> {{mode === 'create' ? "đăng":"sửa bài đăng"}} trong <b>{{community?.name}}</b>
+                        </div>
+                    </div>
+                    <!-- <div class="text-[var(--secondaryTextColor)] text-[20px] py-3"> -->
+                    <div class="text-[20px] py-3">
+                        <input class="post_title_input w-full font-bold" placeholder="Tiêu đề" [(ngModel)]="title" />
+                    </div>
+                    <div class="text-[16px]">
+                        <textarea rows="8" class="post_content_textarea w-full" placeholder="Nội dung bài viết..."
+                            [(ngModel)]="content"></textarea>
+                    </div>
+                    <div class="post_toolbar flex justify-between items-center gap-3">
+                        <div class="post_attach">
+                            <button nz-button nzSize="large" nzType="text" nzShape="circle" (click)="fileInput.click()">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <!-- <button nz-button nzSize="large" nzType="text" nzShape="circle">
+                                <i class="fab fa-youtube"></i>
+                            </button> -->
+                            <label nz-checkbox [(ngModel)]="publicPrivacy">{{publicPrivacy ? 'Công khai' : 'Riêng tư'}}</label>
+                            <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" />
+                        </div>
+                        <div class="post_action">
+                            <button nz-button nzSize="large" nzType="text" (click)="closeModal()">HỦY</button>
+                            <button class="rounded-md" nz-button nzSize="large" nzType="primary"
+                                (click)="handleAddPost()">{{mode === 'create' ? "ĐĂNG":"LƯU"}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-[271px]"></div>
+        </div>
+    </div>
+</div>

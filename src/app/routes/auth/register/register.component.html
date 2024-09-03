@@ -1,0 +1,97 @@
+<ng-container *ngIf="!isLoggedIn; else loggedInScreen">
+  <div class="decoration-items">
+    <div class="top-left-circle"></div>
+    <div class="bottom-left-circle"></div>
+  </div>
+  <div class="body">
+    <div class="container">
+      <div class="content">
+        <div class="description">
+          <h1 class="descrip-title">NỀN TẢNG BỌC LINK ASMLink</h1>
+          <ul class="descrip-list">
+            <li>Đo lường phân tích cụ thể từng IP click vào ads</li>
+            <li>Phân chia các click vào không giới hạn các link ref khác nhau giúp hạn chế rủi ro và tránh bị bắt ads
+              tay</li>
+            <li>Ẩn source google tránh bị bắt ads hệ thống vì dự án không truy vết ra các click/ref dính source google
+            </li>
+            <li>Và rất nhiều chức năng hấp dẫn khác...</li>
+          </ul>
+        </div>
+          <div class="login-box">
+            <div class="logo scale-in-center my-5">
+              <img src="https://asmlink.com/wp-content/uploads/2017/02/logo-vertical.png" alt="Logo"
+                class="login__logo" />
+              <!-- <div class="logo_title tracking-in-expand">ADS</div> -->
+            </div>
+            <div class="form">
+              <div nz-row>
+                <div nz-col nzSpan="24">
+                  <form nz-form [formGroup]="registerForm" [nzLayout]="'vertical'" class="login-form"
+                    (ngSubmit)="register()">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzFor="note">Tên đăng nhập:</nz-form-label>
+                      <nz-form-control nzErrorTip="Vui lòng nhập tên của bạn!">
+                        <nz-input-group nzPrefixIcon="user">
+                          <input nz-input formControlName="name" placeholder="Nhập tên của bạn" value=" " />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzFor="note">Email:</nz-form-label>
+                      <nz-form-control nzErrorTip="Vui lòng nhập địa chỉ email!">
+                        <nz-input-group nzPrefixIcon="mail">
+                          <input type="email" nz-input formControlName="email" placeholder="Nhập email" value=" " />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzFor="note">Mật khẩu:</nz-form-label>
+                      <nz-form-control nzErrorTip="Vui lòng nhập mật khẩu!">
+                        <nz-input-group nzPrefixIcon="lock">
+                          <input type="password" nz-input formControlName="password" placeholder="Nhập mật khẩu"
+                            (keyup.enter)="register()" />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item *ngIf="isShowRefererId">
+                      <nz-form-label nzFor="note">Mã giới thiệu:</nz-form-label>
+                      <nz-form-control>
+                        <nz-input-group nzPrefixIcon="key">
+                          <input nz-input formControlName="aff_id"
+                            placeholder="Mã ID của người giới thiệu bạn đến ASMLink" value=" " />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <!-- <div nz-row class="login-form-margin">
+            <div nz-col [nzSpan]="12">
+              <label nz-checkbox formControlName="remember">
+                <span>Remember me</span>
+              </label>
+            </div>
+            <div nz-col [nzSpan]="12">
+              <a class="login-form-forgot">Forgot password</a>
+            </div>
+          </div> -->
+                    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+                      Đăng ký
+                    </button>
+                    Hoặc
+                    <a nz-button="link" nzType="dashed" routerLink="/login" class="ml-2">Đăng nhập
+                    </a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</ng-container>
+
+<ng-template #loggedInScreen>
+  <nz-result [nzIcon]="'smile-twotone'" [nzTitle]="'Đăng nhập thành công'">
+    <div nz-result-extra>
+      <button nz-button nzType="default" (click)="logout()">Logout</button>
+    </div>
+  </nz-result></ng-template>

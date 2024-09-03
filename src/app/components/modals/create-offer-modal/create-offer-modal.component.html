@@ -1,0 +1,179 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Thêm mới" (nzOnCancel)="handleCancel()"
+  [nzCancelText]="'Hủy'" (nzOnOk)="handleAddAdsOffer()" nzWidth="70vw" [nzOkText]="'Thêm'">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <form nz-form [formGroup]="adsOfferForm" [nzLayout]="'vertical'">
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="offer_type">Loại dịch vụ:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng chọn loại dịch vụ!">
+                  <div class="flex">
+                    <nz-select class="passenger-input" [nzAllowClear]="false" id="offer_type"
+                      nzPlaceHolder="Lựa chọn loại dịch vụ" nzShowSearch formControlName="offer_type">
+                      <!-- (ngModelChange)="onSelectRef($event, i)" -->
+                      <nz-option *ngFor="let offerType of offerTypeList" [nzValue]="offerType?.id!"
+                        [nzLabel]="offerType?.name!"></nz-option>
+                    </nz-select>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="product_type">Loại sản phẩm:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng chọn loại sản phẩm!">
+                  <div class="flex">
+                    <nz-select class="passenger-input" [nzAllowClear]="false" id="product_type"
+                      nzPlaceHolder="Lựa chọn loại sản phẩm" nzShowSearch formControlName="product_type">
+                      <!-- (ngModelChange)="onSelectRef($event, i)" -->
+                      <nz-option *ngFor="let productType of productTypeList" [nzValue]="productType?.id!"
+                        [nzLabel]="productType?.name!"></nz-option>
+                    </nz-select>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="name">Tiêu đề sản phẩm ads:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập tiêu đề!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input id="name" nz-input formControlName="name" placeholder="Nhập tiêu đề" value=" " />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row nzGutter="16">
+            <!-- <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="campaignId"
+                  >ID chiến dịch google ads:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập id chiến dịch!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="campaignId"
+                      nz-input
+                      formControlName="campaignId"
+                      placeholder="Nhập id chiến dịch google ads"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="publish_status">Chế độ hiển thị :</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng chọn chế độ hiển thị!">
+                  <div class="flex">
+                    <nz-select class="passenger-input" [nzAllowClear]="false" id="publish_status"
+                      nzPlaceHolder="Lựa chọn chế độ hiển thị" nzShowSearch formControlName="publish_status">
+                      <!-- (ngModelChange)="onSelectRef($event, i)" -->
+                      <nz-option *ngFor="let item of publishStatusList" [nzValue]="item?.id!"
+                        [nzLabel]="item?.name!"></nz-option>
+                    </nz-select>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="campaignId">Trạng thái:</nz-form-label>
+                <nz-form-control>
+                  <nz-tag [nzColor]="'orange'">Chờ duyệt</nz-tag>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="projectName">Dự án:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input id="projectName" nz-input formControlName="projectName" placeholder="Nhập dự án định chạy"
+                      value=" " />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="projectHomepage">Link trang chủ:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập link trang chủ!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input id="projectHomepage" nz-input formControlName="projectHomepage"
+                      placeholder="Nhập link trang chủ dự án" value=" " />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="duration">Số ngày chạy tối thiểu cam kết:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-number class="w-full" id="duration" [nzMin]="1" [nzStep]="10"
+                    formControlName="duration"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="price">Số ngân sách tối thiểu:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-number class="w-full" id="price" [nzMin]="1000" [nzStep]="100000"
+                    formControlName="price"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="cpc"
+                  >Quyền lợi mong muốn:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập giá CPC!">
+                  <nz-input-number
+                    class="w-full"
+                    id="cpc"
+                    [nzMin]="1000"
+                    [nzStep]="100000"
+                    formControlName="cpc"
+                  ></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="benefit">Quyền lợi mong muốn:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập % quyền lợi mong muốn!">
+                  <nz-input-number class="w-full" id="benefit" [nzMin]="0" [nzMax]="100" [nzStep]="1"
+                    [nzFormatter]="formatterBenefitPercent" [nzParser]="parserBenefitPercent"
+                    formControlName="benefit"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="description">Mô tả:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <textarea id="description" nz-input placeholder="Nhập mô tả" formControlName="description"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

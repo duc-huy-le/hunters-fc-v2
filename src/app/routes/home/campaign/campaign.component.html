@@ -1,0 +1,179 @@
+<div class="campaign_container p-4">
+  <div class="action_btns pb-3">
+    <div nz-row nzGutter="16">
+      <div nz-col [nzSpan]="6">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input
+            type="text"
+            nz-input
+            placeholder="Tìm kiếm mã chiến dịch, tên chiến dịch, mã dự án của bạn..."
+            [ngModel]="searchValue"
+            (ngModelChange)="onSearch($event)"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
+      </div>
+      <div nz-col [nzSpan]="18" class="flex justify-end">
+        <button
+          nz-button
+          nzType="primary"
+          class="mr-2"
+          (click)="showRefModal()"
+        >
+          <i class="fas fa-plus-circle mr-2"></i>Thêm chiến dịch mới
+        </button>
+        <button nz-button nzType="default" (click)="reloadData()">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+    </div>
+    <!-- <nz-select
+      [(ngModel)]="listOfTagOptions"
+      nzMode="tags"
+      [nzTokenSeparators]="[',']"
+      nzPlaceHolder="The search feature is currently being developed"
+      (ngModelChange)="betaMessage($event)"
+    >
+
+    </nz-select> -->
+  </div>
+  <nz-table
+    #basicTable
+    [nzLoading]="loadingTable"
+    [nzScroll]="{ y: 'calc(100vh - 250px)' }"
+    [nzData]="listViewCampaign"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10%">Mã chiến dịch</th>
+        <th nzWidth="15%">Tên chiến dịch</th>
+        <th nzWidth="15%">Mã dự án</th>
+        <th>Script</th>
+        <th nzWidth="10%">Ngày tạo</th>
+        <th nzWidth="10%">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{ data?.id }}</td>
+        <td>{{ data.name }}</td>
+        <td>
+          {{ (data.project_name) + " (" + data.project_id + ")" }}
+        </td>
+        <td>
+          <div class="script_box relative">
+            <div class="absolute top-[4px] right-0">
+              <button
+                nz-button
+                nzType="default"
+                nzShape="circle"
+                (click)="copyToClipboard(data?.script!)"
+              >
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            {{ data?.script }}
+          </div>
+        </td>
+        <td>{{ data.created_at | date : "dd/MM/yyyy HH:mm" }}</td>
+        <td>
+          <button
+            nz-button
+            nz-tooltip
+            nzTooltipTitle="Xóa chiến dịch"
+            nzType="default"
+            nzShape="circle"
+            nzDanger
+            class="mr-2"
+            nz-popconfirm
+            nzPopconfirmTitle="Bạn có chắc chắn muốn xóa chiến dịch này?"
+            nzPopconfirmPlacement="left"
+            nzOkText="Xóa"
+            nzCancelText="Hủy"
+            (nzOnConfirm)="confirmDelete(data?.id)"
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Thêm chiến dịch mới"
+  (nzOnCancel)="handleCancel()"
+  [nzCancelText]="'Hủy'"
+  (nzOnOk)="handleAddData()"
+  [nzOkText]="'Thêm chiến dịch'"
+>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <form
+          nz-form
+          [formGroup]="dataForm"
+          [nzLayout]="'vertical'"
+          class="login-form"
+        >
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="name"
+              >Tên chiến dịch:</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Vui lòng nhập tên chiến dịch!">
+              <nz-input-group nzPrefixIcon="book">
+                <input
+                  id="name"
+                  nz-input
+                  formControlName="name"
+                  placeholder="Nhập tên chiến dịch"
+                  value=" "
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="campaign_id"
+              >Mã chiến dịch:</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Vui lòng nhập mã chiến dịch!">
+              <nz-input-group nzPrefixIcon="link">
+                <input
+                  id="campaign_id"
+                  nz-input
+                  formControlName="campaign_id"
+                  placeholder="Nhập mã chiến dịch"
+                  value=" "
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="project_id">Dự án:</nz-form-label>
+            <nz-form-control nzErrorTip="Vui lòng chọn dự án!">
+              <div class="flex">
+                <nz-select
+                  class="passenger-input"
+                  [nzAllowClear]="false"
+                  id="project_id"
+                  nzPlaceHolder="Chọn dự án"
+                  nzShowSearch
+                  formControlName="project_id"
+                >
+                  <nz-option
+                    *ngFor="let project of projectList"
+                    [nzValue]="project?.id!"
+                    [nzLabel]="project?.name! + ' (' + project?.id + ')'"
+                  ></nz-option>
+                </nz-select>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,99 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="title"
+  [nzCancelText]="null"
+  nzWidth="60vw"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  class="py-0"
+  [nzBodyStyle]="modalBodyStyle"
+>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="12"></div>
+      <div nz-col nzSpan="12">
+        <button
+          *ngIf="!isAddingCampaign"
+          nz-button
+          nzType="primary"
+          class="float-right my-2"
+          (click)="onClickAddCampaign()"
+        >
+          <i class="fas fa-plus-circle mr-2"></i>Thêm chiến dịch mới
+        </button>
+        <button
+          *ngIf="isAddingCampaign"
+          nz-button
+          nzType="default"
+          class="float-right my-2"
+          (click)="onCancelAddCampaign()"
+        >
+        <i class="fas fa-times mr-2"></i>Hủy
+        </button>
+      </div>
+    </div>
+    <nz-table
+      #campaignListTable
+      [nzData]="campaignList"
+      [nzScroll]="{ y: '35vh' }"
+    >
+      <thead>
+        <tr>
+          <th>Tên chiến dịch</th>
+          <th>Mã chiến dịch</th>
+          <th>Kịch bản</th>
+        </tr>
+        <tr *ngIf="isAddingCampaign">
+          <th>
+            <input
+              nz-input
+              placeholder="Nhập tên chiến dịch quảng cáo"
+              [(ngModel)]="adsCampaignNameInput"
+              [nzStatus]="adsCampaignNameInputStatus"
+            />
+          </th>
+          <th>
+            <input
+              nz-input
+              placeholder="Nhập mã chiến dịch quảng cáo"
+              [(ngModel)]="adsCampaignIdInput"
+              [nzStatus]="adsCampaignIdInputStatus"
+            />
+          </th>
+          <th>
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              [nzLoading]="isLoadingSaveCampaignButton"
+              (click)="onSaveCampaign()"
+            >
+              <i class="fas fa-check"></i>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of campaignListTable.data">
+          <td>{{ data?.name }}</td>
+          <td>{{ data?.id }}</td>
+          <td>
+            <div class="script_box relative">
+              <div class="absolute top-[4px] right-0">
+                <button
+                  nz-button
+                  nzType="default"
+                  nzShape="circle"
+                  (click)="copyToClipboard(data?.script!)"
+                >
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+              {{ data?.script }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+</nz-modal>

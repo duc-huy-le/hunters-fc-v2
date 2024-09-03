@@ -1,0 +1,428 @@
+<div class="redirect_container p-4">
+  <div class="action_btns pb-3">
+    <div nz-row nzGutter="16">
+      <div nz-col [nzSpan]="6">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input
+            type="text"
+            nz-input
+            placeholder="Tìm kiếm hồ sơ chuyển hướng của bạn..."
+          />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
+      </div>
+      <div nz-col [nzSpan]="18" class="flex justify-end">
+        <button
+          nz-button
+          nzType="primary"
+          class="mr-2"
+          (click)="showAddRedirectProfileModal()"
+        >
+          <i class="fas fa-plus-circle mr-2"></i>Thêm hồ sơ chuyển hướng mới
+        </button>
+        <button nz-button nzType="default" (click)="reloadData()">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+    </div>
+    <!-- <nz-select
+      [(ngModel)]="listOfTagOptions"
+      nzMode="tags"
+      [nzTokenSeparators]="[',']"
+      nzPlaceHolder="The search feature is currently being developed"
+      (ngModelChange)="betaMessage($event)"
+    >
+
+    </nz-select> -->
+  </div>
+  <nz-table
+    #basicTable
+    [nzLoading]="loadingTable"
+    [nzScroll]="{ y: 'calc(100vh - 250px)' }"
+    [nzData]="listOfData"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10%">Mã dự án</th>
+        <th nzWidth="20%">Tên dự án</th>
+        <!-- <th>Link tracking</th>
+        <th nzWidth="15%">Number of clicks</th> -->
+        <th nzWidth="15%">Ngày tạo</th>
+        <th nzWidth="10%">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{ data?.id }}</td>
+        <td>{{ data.name }}</td>
+        <!-- <td nzEllipsis>
+          <a target="_blank" href="{{ data.link_tracking }}">{{
+            data.link_tracking
+          }}</a>
+        </td>
+        <td nzAlign="center">{{ data.number_of_clicks | number }}</td> -->
+        <td>{{ data.created_at | date : "dd/MM/yyyy" }}</td>
+        <td>
+          <!-- <button
+            nz-button
+            nz-tooltip
+            nzTooltipTitle="Copy to clipboard"
+            nzType="default"
+            nzShape="circle"
+            class="mr-2"
+            (click)="copyToClipboard(data.link_tracking)"
+          >
+            <i class="far fa-copy"></i>
+          </button> -->
+          <!-- <button
+            nz-button
+            nz-tooltip
+            nzTooltipTitle="View click statistics"
+            nzType="default"
+            nzShape="circle"
+            class="mr-2"
+            (click)="onClickProject(data)"
+          >
+            <i class="fas fa-chart-line"></i>
+          </button> -->
+          <!-- <button
+            nz-button
+            nz-tooltip
+            nzTooltipTitle="View campaign list"
+            nzType="default"
+            nzShape="circle"
+            class="mr-2"
+            (click)="viewCampaignList(data)"
+          >
+            <i class="fas fa-window-restore"></i>
+          </button> -->
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisibleAddRedirectProfileModal"
+  nzTitle="Thêm hồ sơ chuyển hướng mới"
+  (nzOnCancel)="handleCancelRedirectProfileModal()"
+  (nzOnOk)="handleAddRedirectProfileModal()"
+  nzWidth="90vw"
+  [nzOkText]="'Thêm hồ sơ chuyển hướng'"
+  [nzBodyStyle]="modalBodyStyle"
+>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <form
+          nz-form
+          [formGroup]="addRedirectProfileForm"
+          [nzLayout]="'vertical'"
+          class="login-form"
+        >
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="projectName"
+                  >Profile name:</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Vui lòng nhập tên hồ sơ!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input
+                      id="profileName"
+                      nz-input
+                      formControlName="redirectProfileName"
+                      placeholder="Nhập tên hồ sơ"
+                      value=" "
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="active"
+                  >Đang hoạt động</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-switch id="active" formControlName="active"></nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="project">
+                  Dự án:
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Please select a project!">
+                  <div class="flex">
+                    <nz-select
+                      class="passenger-input"
+                      [nzAllowClear]="false"
+                      nzShowSearch
+                      id="project"
+                      nzPlaceHolder="Select project"
+                      formControlName="projectID"
+                    >
+                      <nz-option
+                        *ngFor="let project of projectList"
+                        [nzValue]="project?.id!"
+                        [nzLabel]="project?.name!"
+                      ></nz-option>
+                    </nz-select>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="profileOperator"
+                  >Hoạt động áp dụng giữa các điều kiện:</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-radio-group
+                    id="profileOperator"
+                    formControlName="profileOperator"
+                  >
+                    <label
+                      *ngFor="let item of profileOperatorList"
+                      nz-radio
+                      [nzValue]="item?.value"
+                      >{{ item?.label }}</label
+                    >
+                  </nz-radio-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <h3 class="condition_title">"Nếu" - chọn điều kiện chuyển hướng</h3>
+            <nz-table
+              [nzFooter]="conditionTableFooter"
+              nzBordered
+              [nzData]="redirectConditions.value"
+              [nzScroll]="{ y: '400px' }"
+              [nzFrontPagination]="false"
+              [nzShowPagination]="false"
+              nzTableLayout="fixed"
+              class="mt-3"
+            >
+              <thead>
+                <tr>
+                  <th nzAlign="center" nzWidth="100px">STT</th>
+                  <th nzAlign="left" nzWidth="auto">Loại tham chiếu</th>
+                  <th nzAlign="left" nzWidth="20%">Hoạt động tham chiếu</th>
+                  <th nzAlign="center" nzWidth="40%">Giá trị điều kiện</th>
+                  <th nzAlign="center" nzWidth="10%">Hành động</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="redirectConditions">
+                <tr
+                  *ngFor="
+                    let data of redirectConditions.controls;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <td nzAlign="center">
+                    {{ i + 1 }}
+                  </td>
+                  <td>
+                    <nz-form-item>
+                      <nz-form-control>
+                        <div class="flex">
+                          <nz-select
+                            class="passenger-input"
+                            [nzAllowClear]="false"
+                            nzShowSearch
+                            id="redirectType"
+                            nzPlaceHolder="Select redirectType"
+                            formControlName="redirectTypeID"
+                          >
+                            <nz-option
+                              *ngFor="let redirectType of redirectTypeList"
+                              [nzValue]="redirectType?.value!"
+                              [nzLabel]="redirectType?.label!"
+                            ></nz-option>
+                          </nz-select>
+                        </div>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </td>
+                  <td>
+                    <nz-form-item>
+                      <nz-form-control>
+                        <div class="flex">
+                          <nz-select
+                            class="passenger-input"
+                            [nzAllowClear]="false"
+                            nzShowSearch
+                            id="redirectOperator"
+                            nzPlaceHolder="Lựa chọn hoạt động tham chiếu"
+                            formControlName="redirectOperatorID"
+                          >
+                            <nz-option
+                              *ngFor="
+                                let redirectOperator of redirectOperatorList
+                              "
+                              [nzValue]="redirectOperator?.value!"
+                              [nzLabel]="redirectOperator?.label!"
+                            ></nz-option>
+                          </nz-select>
+                        </div>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </td>
+                  <td>
+                    <nz-form-item>
+                      <nz-form-control
+                        nzErrorTip="Vui lòng nhập giá trị điều kiện!"
+                      >
+                        <nz-input-group>
+                          <input
+                            id="ValueCondition"
+                            nz-input
+                            formControlName="valueCondition"
+                            placeholder="Nhập giá trị điều kiện"
+                            value=" "
+                          />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </td>
+                  <td nzAlign="center">
+                    <button
+                      nz-button
+                      nzDanger
+                      nzType="primary"
+                      class="mr-2"
+                      (click)="onClickDeleteRowRedirectConditionsForm(i)"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <ng-template #conditionTableFooter>
+              <div nz-row class="px-2 py-2">
+                <div nz-col nzSpan="24">
+                  <button
+                    nz-button
+                    nzType="primary"
+                    class="mr-2"
+                    (click)="addMoreConditionRow()"
+                  >
+                    <i class="fas fa-plus-circle mr-2"></i>Thêm điều kiện khác
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <div class="mt-4" nz-row nzGutter="16">
+            <h3 class="condition_title">"Sau đó" - Chọn điểm đích chuyển hướng</h3>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="offerID">
+                  Chuyển hướng đến ref:
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Please select a ref!">
+                  <div class="flex">
+                    <nz-select
+                      class="passenger-input"
+                      [nzAllowClear]="false"
+                      nzShowSearch
+                      id="offerID"
+                      nzPlaceHolder="Select a ref"
+                      formControlName="offerID"
+                    >
+                      <nz-option
+                        *ngFor="let ref of refList"
+                        [nzValue]="ref?.id!"
+                        [nzLabel]="ref?.name!"
+                      ></nz-option>
+                    </nz-select>
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <!-- <nz-form-item>
+            <nz-form-label nzRequired nzFor="ref"
+              >Ref:</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please select ref!">
+              <nz-select id="ref" nzPlaceHolder="Select ref" formControlName="refs">
+                <nz-option *ngFor="let ref of refList" [nzValue]="ref?.id!" [nzLabel]="ref?.name!"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item> -->
+          <!-- <form nz-form [formGroup]="refForm" [nzLayout]="'vertical'">
+            @for (control of listOfControl; track control; let i = $index) {
+            <nz-form-item>
+              @if (i === 0) {
+              <nz-form-label
+                [nzXs]="24"
+                [nzSm]="4"
+                [nzFor]="control.controlInstance"
+                nzRequired
+              >
+                Ref:
+              </nz-form-label>
+              }
+              <nz-form-control nzErrorTip="Please select a ref!">
+                <div class="flex">
+                  <nz-select
+                    class="passenger-input"
+                    [nzAllowClear]="false"
+                    [attr.id]="control.id"
+                    [formControlName]="control.controlInstance"
+                    id="ref"
+                    nzPlaceHolder="Select ref"
+                    (ngModelChange)="onSelectRef($event)"
+                  >
+                    <nz-option
+                      *ngFor="let ref of availableRefList"
+                      [nzValue]="ref?.id!"
+                      [nzLabel]="ref?.name!"
+                    ></nz-option>
+                  </nz-select>
+                  @if (listOfControl.length > 1) {
+                  <button
+                    nz-button
+                    nzType="default"
+                    nzShape="circle"
+                    class="ml-3"
+                    (click)="removeField(control, $event)"
+                  >
+                    <i class="fas fa-minus"></i></button
+                  >}
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+            }
+            <nz-form-item>
+              <nz-form-control>
+                <button
+                  disabled
+                  nz-button
+                  nzType="dashed"
+                  class="add-button"
+                  nz-tooltip
+                  nzTooltipTitle="Tính năng đang trong giai đoạn phát triển"
+                  nzTooltipPlacement="bottomLeft"
+                  (click)="addField($event)"
+                >
+                  <span nz-icon nzType="plus"></span>
+                  Add more refs
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </form> -->
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

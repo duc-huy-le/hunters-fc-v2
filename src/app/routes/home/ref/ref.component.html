@@ -1,0 +1,140 @@
+<div class="ref_container p-4">
+  <div class="action_btns pb-3">
+    <div nz-row nzGutter="16">
+      <div nz-col [nzSpan]="6">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="Tìm kiếm id ref, tên ref, url ref của bạn..." [ngModel]="searchRefValue" (ngModelChange)="onSearchRef($event)"/>
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
+      </div>
+      <div nz-col [nzSpan]="18" class="flex justify-end">
+        <button
+          nz-button
+          nzType="primary"
+          class="mr-2"
+          (click)="showRefModal()"
+        >
+          <i class="fas fa-plus-circle mr-2"></i>Thêm ref mới
+        </button>
+        <button nz-button nzType="default" (click)="reloadData()">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+    </div>
+    <!-- <nz-select
+      [(ngModel)]="listOfTagOptions"
+      nzMode="tags"
+      [nzTokenSeparators]="[',']"
+      nzPlaceHolder="The search feature is currently being developed"
+      (ngModelChange)="betaMessage($event)"
+    >
+
+    </nz-select> -->
+  </div>
+  <nz-table
+    #basicTable
+    [nzLoading]="loadingTable"
+    [nzScroll]="{ y: 'calc(100vh - 250px)' }"
+    [nzData]="listViewRef"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10%">Mã ref</th>
+        <th nzWidth="20%">Tên ref</th>
+        <th>Link ref</th>
+        <th nzWidth="15%">Ngày tạo</th>
+        <th nzWidth="10%">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{ data?.id }}</td>
+        <td>{{ data.name }}</td>
+        <td nzEllipsis>
+          <a target="_blank" href="{{ data.url }}">{{ data.url }}</a>
+        </td>
+        <td>{{ data.created_at | date : "dd/MM/yyyy" }}</td>
+        <td>
+          <button
+            nz-button
+            nz-tooltip
+            nzTooltipTitle="Sao chép vào bộ nhớ tạm"
+            nzType="default"
+            nzShape="circle"
+            class="mr-2"
+            (click)="copyToClipboard(data.url)"
+          >
+            <i class="far fa-copy"></i>
+          </button>
+          <!-- <button
+            nz-button
+            nzDanger
+            nz-tooltip
+            nzTooltipTitle="Xóa link ref này"
+            nzType="default"
+            nzShape="circle"
+            class="mr-2"
+            (click)="copyToClipboard(data.url)"
+          >
+            <i class="fas fa-trash"></i>
+          </button> -->
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Thêm ref mới"
+  (nzOnCancel)="handleCancel()"
+  [nzCancelText]="'Hủy'"
+  (nzOnOk)="handleAddRef()"
+  [nzOkText]="'Thêm ref'"
+>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <form
+          nz-form
+          [formGroup]="refForm"
+          [nzLayout]="'vertical'"
+          class="login-form"
+        >
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="refName"
+              >Tên Ref:</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Vui lòng nhập tên ref!">
+              <nz-input-group nzPrefixIcon="book">
+                <input
+                  id="refName"
+                  nz-input
+                  formControlName="name"
+                  placeholder="Nhập tên ref"
+                  value=" "
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="refLink">Link Ref:</nz-form-label>
+            <nz-form-control nzErrorTip="Vui lòng nhập link ref!">
+              <nz-input-group nzPrefixIcon="link">
+                <input
+                  id="refLink"
+                  nz-input
+                  formControlName="url"
+                  placeholder="Nhập link ref "
+                  value=" "
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

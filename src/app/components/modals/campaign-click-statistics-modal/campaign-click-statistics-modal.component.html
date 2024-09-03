@@ -1,0 +1,116 @@
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="title" [nzCancelText]="null" nzWidth="90vw" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()" class="py-0" [nzBodyStyle]="modalBodyStyle" [nzFooter]="modalFooter">
+  <ng-container *nzModalContent>
+    <nz-tabset [nzAnimated]="false">
+      <nz-tab nzTitle="Click mỗi ngày">
+        <nz-table #clicksPerDayTable [nzData]="clicksPerDayData" [nzScroll]="{ y: '35vh' }">
+          <thead>
+            <tr>
+              <th>Ngày</th>
+              <th>Tổng số click hệ thống</th>
+              <th>Tổng số click từ ads</th>
+              <th>Tổng chi phí từ ads</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of clicksPerDayTable.data">
+              <td>{{ data.date | date : "dd/MM/yyy" }}</td>
+              <!-- <td>{{ data.numberOfClicks }}</td>
+              <td>{{ data.realClicks }}</td>
+              <td>{{ data.cost | number }} đ</td> -->
+              <td>{{ data.systemClicks }}</td>
+              <td>{{ data.adsClicks }}</td>
+              <td>{{ data.adsCosts | number }} đ</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+      <nz-tab nzTitle="Danh sách tất cả clicks">
+        <nz-table #projectAllClickTable [nzData]="campaignAllClickData" [nzScroll]="{ y: '45vh' }"
+          [nzShowPagination]="false" [nzFrontPagination]="false">
+          <thead>
+            <tr>
+              <th nzWidth="15%">Thời gian</th>
+              <th nzEllipsis nzWidth="10%">Trình duyệt</th>
+              <th>OS</th>
+              <th nzWidth="8%">Ngôn ngữ</th>
+              <th>Quốc gia</th>
+              <th>Thành phố</th>
+              <th nzWidth="5%">VPN</th>
+              <th nzWidth="10%">ISP</th>
+              <th>IP</th>
+              <th nzWidth="20%">Trang đích</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of projectAllClickTable.data">
+              <td>{{ data.created_at | date : "dd/MM/yyy, HH:mm:ss" }}</td>
+              <td nzEllipsis nz-tooltip [nzTooltipTitle]="data?.browser">{{ data.browser }}</td>
+              <td>{{ data.os }}</td>
+              <td>{{ data.lang }}</td>
+              <td>{{ data.country }}</td>
+              <td>{{ data.city }}</td>
+              <td>
+                {{ data.vpn === "Y" ? "Yes" : data.vpn === "N" ? "No" : "" }}
+              </td>
+              <td nzEllipsis nz-tooltip [nzTooltipTitle]="data?.isp">{{ data.isp }}</td>
+              <td>{{ data.ip }}</td>
+              <td nzEllipsis nz-tooltip [nzTooltipTitle]="data?.redirect">{{ data.redirect }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+        <div class="float-right mt-3">
+          <nz-pagination [nzPageIndex]="projectAllClickTablePage" [nzTotal]="projectAllClickTableTotalRecord"
+            nzShowSizeChanger [nzPageSize]="projectAllClickTablePageSize"
+            (nzPageIndexChange)="projectAllClickTablePageChange($event)"
+            (nzPageSizeChange)="projectAllClickTablePageSizeChange($event)"></nz-pagination>
+        </div>
+
+
+      </nz-tab>
+    </nz-tabset>
+  </ng-container>
+  <ng-template #modalFooter>
+    <!-- <div style="height: 36px; position: relative;"> -->
+    <button id="export" nz-button nzType="primary" nzDanger nzShape="round" (click)="openExportOptionModal()"><i
+        class="fas fa-file-excel mr-3"></i>Xuất excel</button>
+    <!-- </div> -->
+    <button nz-button nzType="primary" (click)="handleOk()">Ok</button>
+  </ng-template>
+</nz-modal>
+
+<ng-template #loadingExportExcelTemplate>
+  <span>Hệ thống đang tạo file excel. Vui lòng đợi trong giây lát</span>
+  <div class="mt-2">
+    <nz-progress [nzPercent]="exportExcelPercent"></nz-progress>
+  </div>
+</ng-template>
+
+<nz-modal [(nzVisible)]="isVisibleExportOptionModal" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzFooter]="exportOptionModalFooter" (nzOnCancel)="handleCancelExport()">
+  <ng-template #modalTitle>Tùy chọn xuất dữ liệu</ng-template>
+
+  <ng-template #modalContent>
+    <div nz-row nzGutter="16">
+      <div nz-col [nzSpan]="12">
+        <p>Từ ngày</p>
+        <nz-date-picker class="w-full" [nzDisabledDate]="disabledStartDate" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+          [(ngModel)]="exportStartDate" nzPlaceHolder="Từ ngày"
+          (nzOnOpenChange)="handleStartOpenChange($event)"></nz-date-picker>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <p>Đến ngày</p>
+        <nz-date-picker class="w-full" #endDatePicker [nzDisabledDate]="disabledEndDate" nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss"
+          [(ngModel)]="exportEndDate" nzPlaceHolder="Đến ngày"
+          (nzOnOpenChange)="handleEndOpenChange($event)"></nz-date-picker>
+      </div>
+    </div>
+
+
+  </ng-template>
+
+  <ng-template #exportOptionModalFooter>
+    <button nz-button nzType="default" (click)="handleCancelExport()">Hủy</button>
+    <button nz-button nzType="primary" (click)="handleExportAllData()">Xuất file</button>
+  </ng-template>
+</nz-modal>

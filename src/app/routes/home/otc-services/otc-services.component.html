@@ -1,0 +1,40 @@
+<div class="otc_services_container p-4">
+  <!-- <div class="card">
+    <div class="bg">
+      📌ASMLink có dịch vụ OTC chuyên mua bán Paypal, Payoneer, PingPong, giá
+      tốt, anh chị em quan tâm liên hệ qua
+      <a href="https://www.facebook.com/ASMLink" target="_blank"
+        ><b class="external_link">fanpage ASMLink!</b></a
+      >
+    </div>
+    <div class="blob"></div>
+  </div> -->
+  <nz-alert
+    nzShowIcon
+    nzType="info"
+    nzMessage="Dịch vụ OTC"
+    [nzDescription]="descriptionTemplate2"
+    [nzAction]="actionTemplate4"
+  ></nz-alert>
+  <ng-template #descriptionTemplate2>
+    <p>
+      📌ASMLink có dịch vụ OTC chuyên mua bán Paypal, Payoneer, PingPong, giá
+      tốt, anh chị em quan tâm liên hệ qua
+      <a href="https://www.facebook.com/ASMLink" target="_blank"
+        ><b class="external_link">fanpage ASMLink!</b></a
+      >
+    </p>
+  </ng-template>
+  <ng-template #actionTemplate4>
+    <nz-space nzDirection="vertical">
+      <button
+        *nzSpaceItem
+        nz-button
+        nzType="primary"
+        (click)="goToASMLinkFanpage()"
+      >
+        Fanpage ASMLink
+      </button>
+    </nz-space>
+  </ng-template>
+</div>

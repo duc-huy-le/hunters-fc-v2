@@ -1,0 +1,27 @@
+/* :host ::ng-deep .ant-modal-body {
+  padding: 0 24px !important;
+} */
+#export
+{
+  /* margin-bottom: 5px;
+  position: absolute;
+  right: 0px; */
+}
+/* :host ::ng-deep .ant-pagination-next .ant-pagination-item-link, .ant-pagination-prev .ant-pagination-item-link { */
+  ::ng-deep .ant-pagination-next .ant-pagination-item-link,
+  ::ng-deep .ant-pagination-prev .ant-pagination-item-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-size: 12px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  outline: 0;
+  transition: all .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

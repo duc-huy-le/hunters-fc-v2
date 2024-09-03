@@ -1,0 +1,13 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:21
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:20.854167,
+https://p21-ad-sg.ibyteimg.com/obj/ad-site-i18n-sg/202405025d0d1f97373792f448bbbaa7
+#EXTINF:20.854167,
+https://p21-ad-sg.ibyteimg.com/obj/ad-site-i18n-sg/202405025d0d732754854ec64c669815
+#EXTINF:20.854167,
+https://p21-ad-sg.ibyteimg.com/obj/ad-site-i18n-sg/202405025d0d336a7c22a36442598738
+#EXTINF:3.253467,
+https://p21-ad-sg.ibyteimg.com/obj/ad-site-i18n-sg/202405025d0d599a55df4c314640bac8
+#EXT-X-ENDLIST

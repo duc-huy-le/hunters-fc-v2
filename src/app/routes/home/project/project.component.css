@@ -1,0 +1,135 @@
+/* .dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all 0.3s;
+  }
+
+  .dynamic-delete-button:hover {
+    color: #777;
+  }
+
+  .passenger-input {
+    width: 60%;
+    margin-right: 8px;
+  }
+
+  [nz-form] {
+    max-width: 600px;
+  }
+
+  .add-button {
+    width: 60%;
+  } */
+::ng-deep .ant-switch {
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.25)
+    ),
+    linear-gradient(to right, #fff, #fff) !important;
+}
+::ng-deep .ant-switch-checked {
+  background: #1890ff !important;
+}
+.condition_title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #303030;
+  margin-bottom: 8px;
+}
+.field_label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+::ng-deep .ant-input-disabled,
+.ant-input[disabled] {
+  color: rgba(0, 0, 0, 0.616);
+}
+.script_box {
+  width: 100%;
+  /* height: 100px; */
+  /* overflow-y: scroll; */
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.project_type_block {
+  border: 2px solid var(--primaryColor);
+  border-radius: 15px;
+  background-color: #afc0d31c;
+  padding: 8px 0;
+  cursor: pointer;
+  box-shadow: #afc0d31c 0px 8px 24px;
+  transition: all 0.2s linear;
+  position: relative;
+}
+.project_type_block:hover {
+  background-color: #a4bbd69d;
+  box-shadow: #a4bbd69d 0px 5px 15px;
+  transition: all 0.2s linear;
+}
+.project_type_block div {
+  scale: 1;
+  transition: all 0.2s linear;
+}
+.project_type_block:hover div {
+  scale: 1.1;
+  transition: all 0.2s linear;
+}
+.project_type_cost {
+  background-color: #1b78e2c5;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 10px;
+}
+.project_type_ribbon {
+  width: 60px;
+  font-size: 14px;
+  padding: 4px;
+  position: absolute;
+  right: -25px;
+  top: -12px;
+  text-align: center;
+  border-radius: 25px;
+  transform: rotate(20deg);
+  background-color: #ff9800;
+  color: white;
+}
+.ribbon-2 {
+  --f: 10px; /* control the folded part*/
+  --r: 15px; /* control the ribbon shape */
+  --t: 10px; /* the top offset */
+
+  position: absolute;
+  inset: var(--t) calc(-1 * var(--f)) auto auto;
+  padding: 0 10px var(--f) calc(10px + var(--r));
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--f)),
+    calc(100% - var(--f)) 100%,
+    calc(100% - var(--f)) calc(100% - var(--f)),
+    0 calc(100% - var(--f)),
+    var(--r) calc(50% - var(--f) / 2)
+  );
+  background: #bd1550;
+  box-shadow: 0 calc(-1 * var(--f)) 0 inset #0005;
+  color: #fff;
+  font-weight: 500;
+}
+.project_type_block__disable {
+  filter: grayscale(100%);
+}
+.disable_trial_button {
+  color: rgba(0, 0, 0, .25);
+  border-color: #d9d9d9;
+  background: #f5f5f5;
+  text-shadow: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}

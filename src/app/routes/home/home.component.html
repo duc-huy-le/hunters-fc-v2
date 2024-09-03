@@ -1,0 +1,258 @@
+<div class="home_container">
+  <div id="header" class="fixed left-0 right-0 top-0">
+    <div class="flex justify-between items-center px-[2vw] h-full">
+      <div class="flex items-center">
+        <div class="logo_title" (click)="goToHome()">ASMLink</div>
+        <span [ngSwitch]="userRole" class="ml-4">
+          <span *ngFor="let package of userAccountPackageList">
+            <nz-tag class="m-0 py-1 px-3 text-[0.729vw] font-bold rounded-[10px]" *ngSwitchCase="package?.role"
+              [nzColor]="package?.color">{{ package?.label }}</nz-tag>
+          </span>
+        </span>
+        <span *ngIf="saleDeadline && userRole === Role.TrialUser" class="sale_text ml-2 p-2">
+          <span class="waviy">
+            <span style="--i:1">Ư</span>
+            <span style="--i:2">u</span>
+            <span style="--i:3">&nbsp;</span>
+            <span style="--i:4">đ</span>
+            <span style="--i:5">ã</span>
+            <span style="--i:6">i</span>
+            <span style="--i:7">&nbsp;</span>
+            <span style="--i:8">n</span>
+            <span style="--i:9">â</span>
+            <span style="--i:10">n</span>
+            <span style="--i:11">g</span>
+            <span style="--i:12">&nbsp;</span>
+            <span style="--i:13">c</span>
+            <span style="--i:14">ấ</span>
+            <span style="--i:15">p</span>
+            <span style="--i:16">&nbsp;</span>
+            <span style="--i:17">g</span>
+            <span style="--i:18">ó</span>
+            <span style="--i:19">i</span>
+            <span style="--i:20">&nbsp;</span>
+            <span style="--i:21">P</span>
+            <span style="--i:22">r</span>
+            <span style="--i:23">o</span>
+
+          </span>
+          <span class="line-through mx-1">$1,300</span>
+          <nz-tag [nzColor]="'green'">-{{salePercent | percent}}</nz-tag>
+
+          <span class="sale_price text-[0.833vw] p-2">${{salePrice | number}}</span>
+          <span class="mx-1">sẽ kết thúc sau</span>
+          <span>
+            <nz-countdown [nzValue]="saleDeadline" [nzFormat]="'D ngày H giờ m phút s giây'"></nz-countdown>
+            <!-- <nz-countdown [nzValue]="0" [nzFormat]="'D ngày H:m:s'"></nz-countdown> -->
+          </span>
+        </span>
+        <!-- <button
+          nz-button
+          nzType="dashed"
+          class="bg-transparent text-white ml-10"
+          (click)="goToTutorial()"
+        >
+          <i class="fas fa-question-circle mr-2"></i>
+          User guide
+        </button> -->
+      </div>
+      <div class="text-white font-bold">
+        <button *ngIf="isShowWallets" nz-button nzType="dashed" class="bg-transparent text-white mr-4" nzShape="round"
+          (click)="goToTransactionHistory()" nz-tooltip nzTooltipTitle="Ví tiền VNĐ" nzTooltipPlacement="bottom">
+          <span class="text-[0.729vw]">Ví VNĐ</span>
+          <i class="fas fa-wallet mx-2"></i>
+          <b [ngClass]="currentBalance < 0 ? 'text-red-500' : ''">{{ currentWallet | number }} đ</b>
+        </button>
+        <button *ngIf="isShowWallets" nz-button nzType="default" nzShape="round" (click)="goToTransactionHistory()"
+          nz-tooltip nzTooltipTitle="Ví tiền ASM" nzTooltipPlacement="bottoms">
+          <span class="text-[0.729vw]">Ví ASM</span>
+          <i class="fas fa-coins mx-2"></i>
+          <b [ngClass]="currentBalance < 0 ? 'text-red-500' : ''">{{ currentBalance | number }} đ</b>
+        </button>
+        <span class="cursor-pointer text-white mx-4" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menuNotification">
+          <!-- <nz-badge nzSize="small" [nzCount]="countNotification()"> -->
+          <span nz-icon nzType="bell" nzTheme="fill" class="text-[24px]"></span>
+          <!-- </nz-badge> -->
+        </span>
+        <span class="cursor-pointer" nz-dropdown [nzDropdownMenu]="userInfoMenu">
+          <!-- <div class="avatar">
+          <i class="far fa-user"></i>
+        </div> -->
+          <nz-avatar class="mr-1" nzIcon="user"></nz-avatar>
+          <span class="text-[0.729vw]">{{ userInfo?.name }} ({{ userInfo?.uuid }})</span>
+          <i class="fas fa-caret-down ml-2"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div id="body" class="flex">
+    <div id="menu_bar" class="flex-[15%]" style="overflow: auto; overflow-x: hidden">
+      <ng-container *ngFor="let menuListItem of listMenu">
+        <div *ngIf="menuListItem.isShow">
+          <div class="menu_item" (click)="handleChildMenuVisibility(menuListItem)" [ngClass]="
+              menuListItem.isShowSideBar ? 'menu_item_parent__selected' : ''
+            ">
+            <div class="relative flex items-center w-full">
+              {{ menuListItem?.label }}
+              <div class="absolute right-0" [ngClass]="
+                  menuListItem.isShowSideBar ? 'icon-rotate-180 pr-0 pl-0' : ''
+                ">
+                <i [class]="menuListItem?.iconClass"></i>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngFor="let menuItem of menuListItem.sub_menu" class="menu_transition">
+            <div *ngIf="menuListItem.isShowSideBar && menuItem.isShow" class="menu_item" [ngClass]="{
+                menu_item__selected:
+                  currentRoute.includes(menuItem.path) && menuItem.path != '',
+                menu_item__locked: menuItem?.isLock === true
+              }" (click)="onClickNav(menuItem)">
+              <div class="flex items-center pl-2">
+                <div class="pr-2">
+                  <i [class]="menuItem?.iconClass"></i>
+                </div>
+                {{ menuItem?.label }}
+              </div>
+              <div *ngIf="menuItem?.isLock">
+                <i class="fas fa-lock"></i>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <!-- <ng-container *ngFor="let menuItem of menuList">
+        <div
+          *ngIf="menuItem.isShow"
+          class="menu_item"
+          [ngClass]="
+            currentRoute.includes(menuItem.path) ? 'menu_item__selected' : ''
+          "
+          [ngClass]="{
+            menu_item__selected: currentRoute.includes(menuItem.path),
+            menu_item__locked: menuItem?.isLock === true
+          }"
+          (click)="onClickNav(menuItem)"
+        >
+          <div class="flex items-center">
+            <div class="pr-2"><i [class]="menuItem?.iconClass"></i></div>
+            {{ menuItem?.label }}
+          </div>
+          <div *ngIf="menuItem?.isLock">
+            <i class="fas fa-lock"></i>
+          </div>
+        </div>
+      </ng-container> -->
+    </div>
+    <div id="page_content" class="flex-[85%]">
+      <nz-alert *ngIf="isShowAdsNotification" nzType="info" nzCloseable [nzMessage]="notificationTitle"
+        [nzDescription]="notification" nzShowIcon></nz-alert>
+      <nz-alert *ngIf="isShowUpgradeAccountNotification" nzType="warning" nzCloseable
+        [nzMessage]="upgradeAccountNotificationTitle" [nzDescription]="upgradeAccountNotification"
+        [nzAction]="upgradeAccountActionTemplate" nzShowIcon></nz-alert>
+      <nz-alert *ngIf="isShowAlmostGoneWalletNotification" nzType="warning" nzCloseable
+        [nzMessage]="showAlmostGoneWalletNotificationTitle" [nzDescription]="showAlmostGoneWalletNotification"
+        nzShowIcon></nz-alert>
+      <ng-template #showAlmostGoneWalletNotificationTitle>
+        <b>Hãy top-up thêm tiền vào ví ASM</b>
+      </ng-template>
+      <ng-template #showAlmostGoneWalletNotification>
+        <p>
+          Số dư ví ASM của bạn hiện còn dưới 5 triệu. Hãy top-up thêm vào ví ASM
+          ngay lập tức để không bị gián đoạn khi sử dụng hệ thống
+        </p>
+      </ng-template>
+      <ng-template #notificationTitle>
+        <!-- <b>Đặt tần suất HÀNG GIỜ</b> -->
+        <b>Chức năng redirect đã ra mắt</b>
+      </ng-template>
+      <ng-template #notification>
+        <!-- Tất cả quảng cáo cần được set chạy script HÀNG GIỜ giống như video hướng
+        dẫn
+        <b
+          ><a (click)="goToTutorial()"
+            >6 - Cài đặt tần suất chạy script "HÀNG GIỜ"</a
+          ></b
+        >
+        ở Chapter 2. Nếu không hệ thống sẽ không hoạt động chính xác! -->
+        Hệ thống ASMLink đã cập nhật chức năng chuyển hướng link ref dựa theo
+        các điều kiện!
+        <b><a (click)="goToTutorial()">Xem ngay tại Chương 2: Làm sao để sử dụng ASMLink</a></b>
+      </ng-template>
+      <ng-template #upgradeAccountNotificationTitle>
+        <b>{{ userInfo?.name }} thân mến</b>
+      </ng-template>
+      <ng-template #upgradeAccountNotification>
+        Cảm ơn {{ userInfo?.name }} đã sử dụng phiên bản dùng thử của ASMLink!
+        Chúng tôi hy vọng bạn có những trải nghiệm tốt nhất. <br />Để sử dụng
+        thêm những tính năng cao cấp hơn, {{ userInfo?.name }} hãy tham khảo các
+        gói dịch vụ của ASMLink nhé!
+      </ng-template>
+      <ng-template #upgradeAccountActionTemplate>
+        <nz-space nzDirection="vertical">
+          <button *nzSpaceItem nz-button nzType="primary" (click)="onClickServices()">
+            Các gói dịch vụ
+          </button>
+        </nz-space>
+      </ng-template>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<nz-dropdown-menu #menuNotification="nzDropdownMenu">
+  <div class="notification_container">
+    <ul class="notification_list max-h-6 overflow-y-auto" nz-menu>
+      <div class="text-[24px] font-bold pl-4 py-2">Thông báo</div>
+      <div class="text-[18px] font-bold pl-3">Mới</div>
+      <li nz-menu-item *ngFor="let notification of notificationMenuList" class="mb-1">
+        <div (click)="goToRedirect(notification)">
+          <p class="text-lg pb-1 font-medium">
+            {{ notification.titleNotification }}
+          </p>
+          <p>{{ notification.content }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #userInfoMenu="nzDropdownMenu">
+  <div class="mt-[7.5%] user_info_dropdown_container">
+    <ul nz-menu nzSelectable>
+      <!-- <div class="mx-2 my-2">
+        <nz-divider [nzText]="userPackage"></nz-divider>
+        <ng-template #userPackage>
+          <div [ngSwitch]="userRole">
+            <div
+              *ngFor="let package of userAccountPackageList"
+              class="flex justify-center"
+            >
+              <nz-tag
+                class="m-0 py-1 px-3 text-[14px] font-bold rounded-[10px]"
+                *ngSwitchCase="package?.role"
+                [nzColor]="package?.color"
+                >{{ package?.label }}</nz-tag
+              >
+            </div>
+          </div>
+        </ng-template>
+      </div> -->
+      <li nz-menu-item routerLink="/forum/community/456">
+        <span class="mr-2"><i class="fas fa-users"></i></span>Đến trang cộng đồng
+      </li>
+      <li nz-menu-item routerLink="/create-community">
+        <span class="mr-2"><i class="fas fa-house-user"></i></span>Tạo cộng đồng riêng
+      </li>
+      <li nz-menu-item (click)="goToTransactionHistory()">
+        <i class="fas fa-coins mr-2"></i>Lịch sử giao dịch
+      </li>
+      <li nz-menu-item (click)="logout()">
+        <i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất
+      </li>
+      <!-- <li nz-menu-item>2nd menu item</li>
+      <li nz-menu-item>3rd menu item</li>
+      <li nz-menu-item nzDanger>4th danger item</li> -->
+    </ul>
+  </div>
+</nz-dropdown-menu>
+<app-new-feature-modal></app-new-feature-modal>

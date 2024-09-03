@@ -1,0 +1,79 @@
+<div class="transaction_history_container p-4">
+  <div class="page_title">Lịch sử giao dịch</div>
+  <div class="float-right mb-3">
+    <button nz-button nzType="primary" class="mr-2" (click)="onClickExchangeMoney()">
+      <i class="fas fa-exchange-alt mr-2"></i>Đổi tiền
+    </button>
+  </div>
+  <div class="mt-2">
+    <nz-table #basicTable [nzLoading]="loadingTable" [nzScroll]="{ y: 'calc(100vh - 350px)' }" [nzData]="listOfData">
+      <thead>
+        <tr>
+          <th nzWidth="12%">Thới gian</th>
+          <th nzWidth="12%">Ví tiền</th>
+          <th nzWidth="10%">Hành Động</th>
+          <th nzWidth="10%">Số lượng</th>
+          <th nzWidth="auto">Nội dung giao dịch</th>
+          <th nzWidth="15%">Số dư ASM sau khi giao dịch</th>
+          <th nzWidth="15%">Số dư VNĐ sau giao dịch</th>
+          <!-- <th nzWidth="10%">Action</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td>{{ data?.created_at | date : "dd/MM/yyyy, HH:mm" }}</td>
+          <td>
+            <nz-tag *ngIf="data?.type === '0' || data?.type === '1' || data?.type === '4'" [nzColor]="'cyan'">Ví ASM
+             </nz-tag>
+            <nz-tag *ngIf="data?.type === '2' || data?.type === '3'" [nzColor]="'purple'">Ví VND</nz-tag>
+          </td>
+          <td>
+            <nz-tag *ngIf="data?.type === '0' || data?.type === '2'" [nzColor]="'blue'">Trừ phí</nz-tag>
+            <nz-tag *ngIf="data?.type === '1' || data?.type === '3'|| data?.type === '4'" [nzColor]="'green'">Nạp tiền</nz-tag>
+          </td>
+          <td>{{ data?.amount | number }} đ</td>
+          <td>{{ data?.content }}</td>
+          <td>{{ data?.balance | number }} đ</td>
+          <td>{{ data?.wallet | number }} đ</td>
+          <!-- <td>
+            <button
+              nz-button
+              nz-tooltip
+              nzTooltipTitle="View campaign list"
+              nzType="default"
+              nzShape="circle"
+              class="mr-2"
+            >
+              <i class="fas fa-window-restore"></i>
+            </button>
+          </td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isVisibleExchangeMoneyModal" nzTitle="Đổi tiền từ ví VNĐ sang ví ASM"
+  (nzOnOk)="handleOkExchangeMoneyModal()" (nzOnCancel)="handleCancelExchangeMoneyModal()" [nzOkText]="'Chuyển đổi'">
+  <ng-container *nzModalContent>
+    <div>Nhập số tiền bạn muốn đổi:</div>
+    <div class="w-full mt-2">
+      <nz-input-number [nzSize]="'large'" [nzStep]="1000000" [nzMin]="2000000" [nzFormatter]="formatterVnd"
+        style="width: 100%" [nzParser]="parserVnd" [(ngModel)]="exchangeAmount"></nz-input-number>
+      <!-- <nz-input-number-group *nzSpaceItem nzAddOnAfter="đ">
+        <nz-input-number
+          [(ngModel)]="exchangeAmount"
+          [nzStep]="10000"
+        ></nz-input-number>
+      </nz-input-number-group> -->
+    </div>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancelExchangeMoneyModal()">
+      Hủy bỏ
+    </button>
+    <button nz-button nzType="primary" nz-popconfirm [nzPopconfirmTitle]="confirmText" nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="acceptExchange()" (click)="handleOkExchangeMoneyModal()">
+      Chuyển đổi
+    </button>
+  </div>
+</nz-modal>

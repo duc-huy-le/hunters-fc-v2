@@ -1,0 +1,174 @@
+<div class="ref_container p-4">
+  <div class="action_btns pb-3">
+    <div nz-row nzGutter="16">
+      <div nz-col [nzSpan]="6">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="Tìm kiếm quảng cáo của bạn..." [ngModel]="searchAdsOfferValue"
+            (ngModelChange)="onSearchAdsOffer($event)" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
+      </div>
+      <div nz-col [nzSpan]="18" class="flex justify-end">
+        <button nz-button nzType="primary" class="mr-2" (click)="showAdsOfferModal()">
+          <i class="fas fa-plus-circle mr-2"></i>Thêm suất bán mới
+        </button>
+        <button nz-button nzType="default" (click)="reloadData()">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- <nz-table
+    #basicTable
+    [nzLoading]="loadingTable"
+    [nzScroll]="{ y: 'calc(100vh - 250px)' }"
+    [nzData]="adsOfferList"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10%">Mã ref</th>
+        <th nzWidth="20%">Tên ref</th>
+        <th>Link ref</th>
+        <th nzWidth="15%">Ngày tạo</th>
+        <th nzWidth="10%">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{ data?.id }}</td>
+        <td>{{ data.name }}</td>
+        <td nzEllipsis>
+          <a target="_blank" href="{{ data.url }}">{{ data.url }}</a>
+        </td>
+        <td>{{ data.created_at | date : "dd/MM/yyyy" }}</td>
+        <td>
+          <button
+            nz-button
+            nz-tooltip
+            nzTooltipTitle="Copy to clipboard"
+            nzType="default"
+            nzShape="circle"
+            class="mr-2"
+            (click)="copyToClipboard(data.url)"
+          >
+            <i class="far fa-copy"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table> -->
+  <app-ads-offer-list [adsOfferList]="viewOfferList"></app-ads-offer-list>
+</div>
+
+<nz-modal [(nzVisible)]="isVisibleAddTicketForm" nzTitle="Đề xuất hợp tác" (nzOnCancel)="handleCancelTicketForm()"
+  [nzCancelText]="'Hủy'" (nzOnOk)="handleAddTicket()" nzWidth="70vw" [nzOkText]="'Gửi đề xuất'">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <form nz-form [formGroup]="adsOfferForm" [nzLayout]="'vertical'">
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="name">Tiêu đề sản phẩm ads:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập tiêu đề!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input id="name" nz-input formControlName="name" placeholder="Nhập tiêu đề" value=" " />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="campaignId">ID chiến dịch google ads:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập id chiến dịch!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input id="campaignId" nz-input formControlName="campaignId"
+                      placeholder="Nhập id chiến dịch google ads" value=" " />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="campaignId">Trạng thái:</nz-form-label>
+                <nz-form-control>
+                  <nz-tag [nzColor]="'orange'">Chờ duyệt</nz-tag>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="projectName">Dự án:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input id="projectName" nz-input formControlName="projectName" placeholder="Nhập dự án định chạy"
+                      value=" " />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="projectHomepage">Link trang chủ:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập link trang chủ!">
+                  <nz-input-group nzPrefixIcon="book">
+                    <input id="projectHomepage" nz-input formControlName="projectHomepage"
+                      placeholder="Nhập link trang chủ dự án" value=" " />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="duration">Số ngày chạy tối thiểu cam kết:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-number class="w-full" id="duration" [nzMin]="1" [nzStep]="10"
+                    formControlName="duration"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="price">Số ngân sách tối thiểu:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập dự án!">
+                  <nz-input-number class="w-full" id="price" [nzMin]="1000" [nzStep]="100000"
+                    formControlName="price"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="cpc">CPC mong muốn:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập giá CPC!">
+                  <nz-input-number class="w-full" id="cpc" [nzMin]="1000" [nzStep]="100000"
+                    formControlName="cpc"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzFor="description">Mô tả chi tiết:</nz-form-label>
+                <nz-form-control nzErrorTip="Vui lòng nhập mô tả!">
+                  <textarea id="description" nz-input placeholder="Nhập ghi chú"
+                    formControlName="description"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<app-create-offer-modal #createOfferModal></app-create-offer-modal>

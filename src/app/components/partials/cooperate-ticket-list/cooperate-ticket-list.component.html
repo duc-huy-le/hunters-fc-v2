@@ -1,0 +1,86 @@
+<div class="ads_offer_list">
+  @for (ticket of ticketList; track ticket) {
+  <div class="ads_offer_item p-4 my-2">
+    <div class="flex justify-between">
+      <div>
+        <b class="text-[16px]">Đề xuất hợp tác cho <span class="text-[var(--primaryColor)] cursor-pointer">{{ ticket?.name }}</span></b>
+        <!-- <p class="text-[#00000073]">{{ ticket?.note }}</p> -->
+      </div>
+      <div *ngIf="listType === AdsOfferListType.All">
+        <button
+          nz-button
+          nzType="default"
+          class="mr-2"
+          (click)="showTicketModal(ticket)"
+        >
+        <i class="fas fa-reply mr-2"></i> Đề xuất lại
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          class="mr-2"
+          (click)="showTicketModal(ticket)"
+        >
+        <i class="far fa-check-circle mr-2"></i> Đồng ý hợp tác
+        </button>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="8">
+        <div class="my-1">
+          <span>Dự án: </span>
+          <span
+            ><b>{{ ticket?.projectName }}</b></span
+          >
+        </div>
+        <div class="my-1">
+          <span>Trang chủ: </span>
+          <span
+            ><b>{{ ticket?.projectHomepage }}</b></span
+          >
+        </div>
+      </div>
+      <div nz-col nzSpan="8">
+        <div class="my-1">
+          <span>Từ khóa: </span>
+          <span
+            ><b>{{ ticket?.keywords?.join(", ") }}</b></span
+          >
+        </div>
+        <div class="my-1">
+          <span>Quốc gia: </span>
+          <span
+            ><b>{{ ticket?.countries?.join(", ") }}</b></span
+          >
+        </div>
+        <div class="my-1">
+          <span>Thiết bị: </span>
+          <span
+            ><b>{{ ticket?.devices?.join(", ") }}</b></span
+          >
+        </div>
+      </div>
+      <div nz-col nzSpan="8">
+        <div class="my-1">
+          <span>Ngày đề xuất: </span>
+          <span
+            ><b>{{ ticket?.createdAt | date : "dd/MM/yyyy" }}</b></span
+          >
+        </div>
+        <div class="my-1">
+          <span>CPC: </span>
+          <span>{{ticket?.lastCpc ?? 0 | number}} đ<i class="fas fa-long-arrow-alt-right mx-2"></i></span>
+          <span>
+            <nz-tag [nzColor]="'var(--primaryColor)'"
+              >{{ ticket?.cpc | number }} đ</nz-tag
+            >
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<app-cooperate-ticket #cooperateTicket></app-cooperate-ticket>
+

@@ -1,0 +1,520 @@
+<div class="tutorial_container p-4">
+  <div class="tutorial_title">Khóa học ASMLink</div>
+  <div class="mt-4">
+    <nz-tabset
+      nzType="card"
+      [nzSelectedIndex]="currentChapterTabIndex"
+      (nzSelectedIndexChange)="onChangeChapterTabIndex($event)"
+    >
+      <nz-tab [nzTitle]="'Chương 1: Tại sao phải sử dụng ASMLink?'">
+        <nz-collapse>
+          @for (lesson of chapterOneList; let i = $index; track i) {
+          <nz-collapse-panel
+            [nzHeader]="i + 1 + ' - ' + lesson?.name"
+            [nzActive]="lesson?.isActive"
+            [nzDisabled]="lesson?.isDisabled"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <video
+                [id]="'my-video-' + i"
+                class="video-js vjs-default-skin h-[50vh] w-[89vh]"
+                controls
+                preload="metadata"
+                data-setup="{}"
+                [src]="lesson?.videoPath"
+              >
+                <source
+                  [id]="'src-' + i"
+                  [src]="lesson?.videoPath"
+                  type="application/x-mpegURL"
+                />
+              </video>
+            </div>
+          </nz-collapse-panel>
+          }
+        </nz-collapse>
+        <!-- <nz-collapse>
+          <nz-collapse-panel
+            [nzHeader]="'1 - Chia sẻ trước khóa học'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1NPPsCLlVhjXJgrtynQI9ny0jaRpL-j9V/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'2 - Những mảng kinh doanh hiện tại của ASM'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1EgP1evZruD-upJdYcyzhl6lhk4e-iyfr/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'3 - Quy tắc và tôn chỉ lớp học'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1_GO2NpkTJF5kvfT_V2BRpBnIyfGZFGa7/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'4 - Mục tiêu của khóa học'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1FiUaX4DXyPDMkdNzLWH32I259-SFf-1D/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'5 - 3 nỗi đau khi chạy ads và lý do gốc rễ'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1M49BbxQc__KqDiPEI99PpkfxKaDb9Frn/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'6 - Hiểu về chính sách của các dự án'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1I2N5iHK0yH262_zyWsBkAy2u9CMAG4l1/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'7 - Các kiểu bắt ads của dự án'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1Y8jsc56OgvA7f3b-KuPS1a0EUHTxc_RP/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'8 - Cạm bẫy của các dự án'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1dljUI218wartyl_T02_xtGpCwiM5IUXp/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'9 - Giải pháp bọc link ASMLink'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1kw5KcyKsgD-W2H5xOCYP5bQcMqtKbI72/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'10 - Các tính năng đang phát triển'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1Dr9y_hEx_vMcQpiN1qgt26wLcMD1zwzL/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'11 - “Bảo hiểm” cho tài khoản affiliate'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1MaRz-cMFKvdhmqyiJ0z1dgHiby_rbMak/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'12 - Gợi ý các chiến lược lên ads'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1JQdIu9NYP3ru3iWSkrWjja7aI7EuDgZC/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="
+              '13 - Tài nguyên cần chuẩn bị và tổng quan cách sử dụng hệ thống bọc link'
+            "
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1gFlqv7UVnatNlLu-hr1shWG9cm5-9pqb/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'14 - Tip chứng minh traffic hiệu quả'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/18sAfUIwCIjfZBCleLLco9qIruGeqYYmS/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'15 - Chia sẻ từ các anh chị em học viên'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1j9OSifjFNp0Sicx1LNdhXZYZ2leyVjHo/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+        </nz-collapse> -->
+      </nz-tab>
+      <nz-tab
+        [nzTitle]="'Chương 2: Làm sao để sử dụng ASMLink?'"
+        [nzDisabled]="!isCanAccessChapterTwo"
+      >
+        <!-- <nz-collapse>
+          @for (lesson of chapterTwoList; let i = $index; track i) {
+          <nz-collapse-panel
+            [nzHeader]="i + 1 + ' - ' + lesson?.name"
+            [nzActive]="lesson?.isActive"
+            [nzDisabled]="lesson?.isDisabled"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <video
+                [id]="'my-video-' + i"
+                class="video-js h-[50vh] w-[89vh]"
+                controls
+                preload="none"
+                data-setup="{}"
+                [src]="lesson?.videoPath"
+              >
+                <source
+                  [src]="lesson?.videoPath"
+                  type="application/x-mpegURL"
+                />
+              </video>
+            </div>
+          </nz-collapse-panel>
+          }
+        </nz-collapse> -->
+
+        <nz-collapse>
+          <ng-container *ngFor="let lesson of chapterTwoList; let i = index">
+            <nz-collapse-panel
+              [nzHeader]="headerTemplate"
+              [nzActive]="lesson?.isActive"
+              [nzDisabled]="lesson?.isDisabled"
+            >
+              <div class="h-[50vh] w-[89vh]">
+                <video
+                  [id]="'my-video-' + i"
+                  class="video-js h-[50vh] w-[89vh]"
+                  controls
+                  preload="none"
+                  data-setup="{}"
+                  [src]="lesson?.videoPath"
+                >
+                  <source
+                    [src]="lesson?.videoPath"
+                    type="application/x-mpegURL"
+                  />
+                </video>
+              </div>
+            </nz-collapse-panel>
+            <ng-template #headerTemplate>
+              {{ i + 1 }} - {{ lesson?.name }}
+              <span *ngIf="i === 7" class="ml-2 vibrate-1">
+                <nz-tag [nzColor]="'#f50'">New</nz-tag>
+              </span>
+            </ng-template>
+          </ng-container>
+        </nz-collapse>
+        <!-- <nz-collapse>
+          <nz-collapse-panel
+            [nzHeader]="'1 - Đăng ký tài khoản & đăng nhập'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1i7-CpiaUhLqo9rRsZKnmzvFvAa_WziiO/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'2 - Tạo link ref'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1JkGcP2b2b2NHBiFRpk897VixRrETbNJd/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'3 - Tạo dự án'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1mLVoo_tqH5oa2BVsToDt8z94OhkAMbxy/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'4 - Tạo chiến dịch'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1c3InWwvEV06xntWQ23RKwviwVz1lc39-/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'5 - Chạy script trong chiến dịch quảng cảo'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1vzntYXHZe-LQ5D-fG0sHmPaTr6WAcW37/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'6 - Cài đặt tần suất chạy script'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1QtsZvhTskEX_k1XNN-cnsyiIwTLZ66Tk/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+          <nz-collapse-panel
+            [nzHeader]="'7 - Xem dữ liệu thống kê'"
+            [nzActive]="true"
+            [nzDisabled]="false"
+          >
+            <div class="h-[50vh] w-[89vh]">
+              <iframe
+                src="https://drive.google.com/file/d/1K5EcwbqOrmRQxomBUmbTFDSJXiTbt5M3/preview"
+                height="100%"
+                width="100%"
+                allow="autoplay"
+                allowfullscreen="true"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-modals	allow-orientation-lock allow-pointer-lock	allow-presentation allow-top-navigation allow-top-navigation-by-user-activation"
+              ></iframe>
+            </div>
+          </nz-collapse-panel>
+        </nz-collapse> -->
+        <button
+          nz-button
+          nzType="primary"
+          class="mt-3 mb-10"
+          (click)="onClickFinishTutorial()"
+        >
+          <i class="fas fa-check-circle mr-3"></i>Hoàn thành khóa học
+        </button>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+  <div>
+    <!-- <video width="320" height="240" controls>
+      <source src="https://asmteam.click/test.m3u8" type="application/x-mpegURL">
+    Your browser does not support the video tag.
+    </video> -->
+    <!-- <vg-player>
+      <vg-overlay-play></vg-overlay-play>
+      <vg-buffering></vg-buffering>
+      <vg-scrub-bar>
+        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+      </vg-scrub-bar>
+      <vg-controls>
+        <vg-play-pause></vg-play-pause>
+        <vg-playback-button></vg-playback-button>
+        <vg-time-display
+          vgProperty="current"
+          vgFormat="mm:ss"
+        ></vg-time-display>
+        <vg-scrub-bar style="pointer-events: none"></vg-scrub-bar>
+        <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+        <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+        <vg-track-selector></vg-track-selector>
+        <vg-mute></vg-mute>
+        <vg-volume></vg-volume>
+        <vg-fullscreen></vg-fullscreen>
+      </vg-controls>
+      <video
+        [vgMedia]="$any(media)"
+        #media
+        id="singleVideo"
+        preload="auto"
+        crossorigin
+      >
+        <source src="../../../../assets/videos/Sequence 01.mp4" type="video/webm">
+        <source src="../../../../assets/videos/3.m3u8" type="video/webm">
+        <source
+          src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+          type="application/x-mpegURL"
+        />
+        <source
+          src="https://asmteam.click/output.m3u8"
+          type="video/mp4"
+        />
+        <source src="http://static.videogular.com/assets/videos/videogular.ogg" type="video/ogg">
+        <source src="http://static.videogular.com/assets/videos/videogular.webm" type="video/webm">
+        <track kind="subtitles" label="English" src="http://static.videogular.com/assets/subs/pale-blue-dot.vtt"
+          srclang="en" default>
+        <track kind="subtitles" label="Español" src="http://static.videogular.com/assets/subs/pale-blue-dot-es.vtt"
+          srclang="es">
+      </video>
+    </vg-player> -->
+  </div>
+</div>

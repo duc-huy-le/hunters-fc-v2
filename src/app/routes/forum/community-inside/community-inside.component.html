@@ -1,0 +1,195 @@
+<div class="forum_body mt-6 flex justify-center">
+    <div class="content_layout mt-[8px] flex gap-6">
+        <div class="main_content">
+            <div class="bg-white py-3 px-5 rounded-xl shadow-md flex items-center gap-4"
+                (click)="openCreatePostModal()">
+                <div>
+                    <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
+                </div>
+                <div class="text-[var(--secondaryTextColor)] text-[20px]">
+                    Tạo bài viết
+                </div>
+            </div>
+            <div class="category_list flex gap-3 my-4">
+                <button class="category_item category_item__active">
+                    All
+                </button>
+                <button class="category_item">
+                    INTRODUCTION🥋
+                </button>
+                <button class="category_item">
+                    TRAINING🥷
+                </button>
+                <button class="category_item">
+                    MEDITATIONS & STATE 🧘‍♀️
+                </button>
+
+            </div>
+            <div class="post_list">
+                <!-- <div class="post_item flex items-center gap-3">
+                    <div class="post_body flex flex-col gap-2">
+                        <div class="flex gap-2">
+                            <nz-avatar
+                                nzSrc="https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/416137715_6421688664599481_8826627216426784313_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=TqPIaH4TdDkQ7kNvgHQJ24S&_nc_ht=scontent.fhan2-5.fna&oh=00_AYA8bNnRdawhRBhUIQJrGCWkvBwirjtkQhkxi5T8TeKNvA&oe=66D096A9"></nz-avatar>
+                            <div class="flex flex-col">
+                                <div class="text-[16px]"><b>Long Lê</b></div>
+                                <div>20/08 trong <b>GENERALS💌</b></div>
+                            </div>
+                        </div>
+                        <div class="post_title text-[20px]">
+                            <b>🥷 How To Use The Curriculum & Improve Your Skill ☯️</b>
+                        </div>
+                        <div class="post_content text-[16px]">
+                            Feel free to use the curriculum how you please. Here is my suggestion below on how to
+                            get the most out of the curriculum so you can level up your martial skill and life.
+                        </div>
+                        <div class="post_action flex items-center gap-3">
+                            <div class="post_action_button">
+                                <button><i class="far fa-heart"></i></button>
+                                <a>15</a>
+                            </div>
+                            <div class="post_action_button">
+                                <button><i class="far fa-comment"></i></button>
+                                <a>11</a>
+                            </div>
+                            <div>
+                                <nz-avatar-group>
+                                    <nz-avatar nzIcon="user"
+                                        nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                                    <nz-avatar style="background-color: #f56a00" nzText="U"></nz-avatar>
+                                    <nz-avatar style="background-color: #87d068" nz-tooltip
+                                        nzTooltipTitle="NG-ZORRO User" nzIcon="user"></nz-avatar>
+                                    <nz-avatar style="background-color: #1890ff" nzText="NG"></nz-avatar>
+                                </nz-avatar-group>
+                            </div>
+                            <div>đã bình luận 3 tiếng trước</div>
+                        </div>
+                    </div>
+                    <div class="post_media w-[160px]">
+                        <img src="https://asmlink.com/wp-content/uploads/2017/02/logo-vertical.png" alt="">
+                    </div>
+                </div>
+                <div class="post_item flex items-center gap-3">
+                    <div class="post_body flex flex-col gap-2">
+                        <div class="flex gap-2">
+                            <nz-avatar
+                                nzSrc="https://scontent.fhan2-4.fna.fbcdn.net/v/t1.18169-9/16387187_1381908655195351_3843761587723721580_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=Ax50EFX3VmYQ7kNvgF-47SI&_nc_ht=scontent.fhan2-4.fna&oh=00_AYD9VpeROaxKZEweRUJRb-N6ddTKEXTp1umhwtnnJE72ig&oe=66F23284"></nz-avatar>
+                            <div class="flex flex-col">
+                                <div class="text-[16px]"><b>Khanh Duc Cao </b></div>
+                                <div>19/08 trong <b>INTRODUCTION🥋</b></div>
+                            </div>
+                        </div>
+                        <div class="post_title text-[20px]">
+                            <b>Down to Earth Sifu</b>
+                        </div>
+                        <div class="post_content text-[16px]">
+                            Dude...I fucking love Sifu man 😂 I was raised in a vulgar, brazen, direct household and
+                            grew up around too many squares who considered cursing to be a sin, let alone wrong and
+                            when I'd get home I
+                        </div>
+                        <div class="post_action flex items-center gap-3">
+                            <div class="post_action_button">
+                                <button><i class="far fa-heart"></i></button>
+                                <a>150</a>
+                            </div>
+                            <div class="post_action_button">
+                                <button><i class="far fa-comment"></i></button>
+                                <a>10</a>
+                            </div>
+                            <div>
+                                <nz-avatar-group>
+                                    <nz-avatar nzIcon="user"
+                                        nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                                    <nz-avatar style="background-color: #f56a00" nzText="U"></nz-avatar>
+                                    <nz-avatar style="background-color: #1890ff" nzText="NG"></nz-avatar>
+                                </nz-avatar-group>
+                            </div>
+                            <div>đã bình luận 5 tiếng trước</div>
+                        </div>
+                    </div>
+                    <div class="post_media w-[160px]">
+                        <img src="https://scontent.fhan2-4.fna.fbcdn.net/v/t1.18169-9/16387187_1381908655195351_3843761587723721580_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=Ax50EFX3VmYQ7kNvgF-47SI&_nc_ht=scontent.fhan2-4.fna&oh=00_AYD9VpeROaxKZEweRUJRb-N6ddTKEXTp1umhwtnnJE72ig&oe=66F23284"
+                            alt="">
+                    </div>
+                </div> -->
+                @for (post of postList; track post) {
+                <div class="post_item flex items-center gap-3 cursor-pointer" (click)="openDetailPost(post)">
+                    <div class="post_body flex flex-col gap-2">
+                        <div class="flex gap-2">
+                            <nz-avatar [nzSrc]="post?.user?.profilePicture"></nz-avatar>
+                            <div class="flex flex-col">
+                                <div class="text-[16px]"><b>{{post?.user?.name}}</b></div>
+                                <div>{{post?.createdAt | date: "dd/MM, HH:mm"}} trong <b>GENERALS💌</b></div>
+                            </div>
+                            <div *ngIf="post?.user?.userId === userInfo?.id">
+                                <button nz-button nzSize="large" nzShape="circle" nzType="default"
+                                    (click)="openCreatePostModal(post)">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="post_title text-[20px]">
+                            <b>{{post?.summary}}</b>
+                        </div>
+                        <div class="post_content text-[16px]">
+                            {{post?.content}}
+                        </div>
+                        <div class="post_action flex items-center gap-3">
+                            <div class="post_action_button">
+                                <button *ngIf="post?.userLiked"><i class="fas fa-heart"></i></button>
+                                <button *ngIf="!post?.userLiked"><i class="far fa-heart"></i></button>
+                                <a>{{post?.likeCount}}</a>
+                            </div>
+                            <div class="post_action_button">
+                                <button><i class="far fa-comment"></i></button>
+                                <a>{{post?.commentCount}}</a>
+                            </div>
+                            <div>
+                                <nz-avatar-group>
+                                    <nz-avatar nzIcon="user"
+                                        nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                                    <nz-avatar style="background-color: #f56a00" nzText="U"></nz-avatar>
+                                    <nz-avatar style="background-color: #87d068" nz-tooltip
+                                        nzTooltipTitle="NG-ZORRO User" nzIcon="user"></nz-avatar>
+                                    <nz-avatar style="background-color: #1890ff" nzText="NG"></nz-avatar>
+                                </nz-avatar-group>
+                            </div>
+                            <div>đã bình luận 3 tiếng trước</div>
+                        </div>
+                    </div>
+                    <div class="post_media w-[160px]">
+                        <!-- <img src="https://asmlink.com/wp-content/uploads/2017/02/logo-vertical.png" alt=""> -->
+                        <nz-image-group>
+                            <ng-container *ngFor="let media of post?.mediaSummary; let i = index">
+                                <img *ngIf="media.type === 'image' && i < 1" nz-image [nzSrc]="media?.thumbnail"
+                                    alt="" />
+                            </ng-container>
+                        </nz-image-group>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        <div class="right_sidebar">
+            <div>
+                <div class="community_info bg-white rounded-xl flex flex-col">
+                    <div>
+                        <img class="rounded-t-xl" [src]="community!.media[0].url" alt="">
+                    </div>
+                    <div class="p-4">
+                        <div class="text-[18px]">
+                            {{community?.name}}
+                        </div>
+                        <div class="text-[13px] text-[var(--secondaryTextColor)]">
+                            app.asmlink.com/forum/community/123
+                        </div>
+                    </div>
+                </div>
+                <div class="leaderboard"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-create-post-modal #createPostModal></app-create-post-modal>
+<app-detail-post-modal #detailPostModal></app-detail-post-modal>

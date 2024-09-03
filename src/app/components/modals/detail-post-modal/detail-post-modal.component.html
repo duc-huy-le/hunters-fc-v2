@@ -1,0 +1,82 @@
+<div *ngIf="isVisible" class="detail_post_modal_container bg-[#000000BF] h-full fixed top-0 left-0 right-0"
+    (click)="closeModal()">
+    <div class="mt-[136px] flex justify-center">
+        <div class="w-[790px] mt-[8px] flex gap-6" (click)="$event.stopPropagation()">
+            <div class="flex_fill">
+                <div class="bg-white py-6 px-8 rounded-xl shadow-md">
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
+                        </div>
+                        <div class="text-[16px]">
+                            <b>{{userInfo?.name }}</b>
+                            <div>{{post?.createdAt | date: "dd/MM, HH:mm"}} trong <b>GENERALS💌</b></div>
+                        </div>
+                    </div>
+                    <!-- <div class="text-[var(--secondaryTextColor)] text-[20px] py-3"> -->
+                    <div class="text-[23px] py-3">
+                        {{post?.summary}}
+                    </div>
+                    <div class="text-[16px]">
+                        {{post?.content}}
+                    </div>
+                    <div class="post_toolbar mt-4 flex justify-start items-center gap-3">
+                        <div class="post_action_button border-[1px] rounded-md py-2 px-3">
+                            <button *ngIf="post?.userLiked"><i class="fas fa-heart mr-2"></i>Đã yêu thích</button>
+                            <button *ngIf="!post?.userLiked"><i class="far fa-heart mr-2"></i>Yêu thích</button>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a>{{post?.likeCount}}</a>
+                        </div>
+                        <div class="post_action_button flex">
+                            <p><i class="far fa-comment mr-2"></i></p>
+                            <p>{{post?.commentCount}} bình luận</p>
+                        </div>
+                    </div>
+                    <nz-divider></nz-divider>
+                    <div class="flex gap-2">
+                        <nz-avatar nzSize="large" [nzSrc]="userInfo?.avatar"></nz-avatar>
+                        <div class="bg-[#F8F7F5] px-4 py-2 rounded-2xl border-[1px] w-full">
+                            <div class="flex gap-2">
+                                <textarea rows="1" type="text" class="flex_fill w-full bg-[#F8F7F5] outline-none "
+                                    placeholder="Nhập bình luận... " [(ngModel)]=newComment></textarea>
+                                <button (click)="handleAddComment()"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 flex flex-col gap-4">
+                        @for (comment of post?.comments; track comment) {
+                        <div class="flex gap-2">
+                            <nz-avatar nzSize="large" [nzSrc]="post?.user?.profilePicture"></nz-avatar>
+                            <div class="bg-[#F8F7F5] px-4 py-2 rounded-2xl border-[1px] w-full">
+                                <div class="flex gap-2 ">
+                                    <b>{{comment?.user?.name}} </b>
+                                    <p>•</p>
+                                    <div class="text-[#909090]"> {{comment?.createdAt | date: "dd/MM, HH:mm"}}</div>
+                                    <div><button *ngIf="!editingCommentId || editingCommentId != comment?.commentId"
+                                            (click)="onClickEditComment(comment)"><i class="fas fa-pen"></i></button>
+                                        <button *ngIf="editingCommentId == comment?.commentId"
+                                            (click)="onClickCancelComment()"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="editingCommentId != comment?.commentId" class="text-[16px]">
+                                    {{comment?.content}}</div>
+                                <div *ngIf="editingCommentId == comment?.commentId"
+                                    class="bg-[#F8F7F5] px-4 py-2 rounded-2xl border-[1px] w-full">
+                                    <div class="flex gap-2">
+                                        <textarea rows="1" type="text"
+                                            class="flex_fill w-full bg-[#F8F7F5] outline-none "
+                                            placeholder="Nhập bình luận... " [(ngModel)]=editingComment></textarea>
+                                        <button (click)="handleEditComment()">
+                                            <i class="fas fa-check-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

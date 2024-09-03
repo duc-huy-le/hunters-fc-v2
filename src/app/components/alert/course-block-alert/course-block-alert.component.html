@@ -1,0 +1,28 @@
+<nz-alert
+  class="mb-3"
+  nzType="warning"
+  [nzMessage]="lockVideoMessage"
+  [nzDescription]="lockVideoDescription"
+  nzShowIcon
+></nz-alert>
+<ng-template #lockVideoMessage>
+  <app-highlight-text
+    >Các video trong chương học này dành cho tài khoản gói cao
+    cấp.</app-highlight-text
+  >
+</ng-template>
+<ng-template #lockVideoDescription
+  ><b class="text-[18px]"
+    >Ngoài ra ASMLink vẫn còn rất nhiều bài học free chất lượng khác, bạn hãy
+    xem hết các video này để nắm chắc được mindset nhé.</b
+  >
+  <div class="mt-4 flex">
+    <app-primary-button (onClick)="onClickUpgrade()"
+      ><i class="fas fa-crown mr-2"></i>NÂNG CẤP NGAY</app-primary-button
+    >
+    <!-- <button class="button button--hyperion"><span><span>NÂNG CẤP NGAY</span></span></button> -->
+    <app-link-text class="ml-4" (click)="onClickContinueFree()"
+      >Xem tiếp bài học free<i class="fas fa-angle-right ml-2"></i
+    ></app-link-text>
+  </div>
+</ng-template>

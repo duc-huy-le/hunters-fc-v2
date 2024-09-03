@@ -1,0 +1,24 @@
+.create_community_container {
+    background: var(--forumBackgroundColor);
+    height: 100vh;
+}
+
+.label {
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+:host ::ng-deep .icon-uploader>.ant-upload {
+    width: 128px;
+    height: 128px;
+}
+
+:host ::ng-deep .banner-uploader>.ant-upload {
+    width: 240px;
+    height: 128px;
+}
+
+:host ::ng-deep .ant-upload-picture-card-wrapper {
+    display: inline-block;
+    width: auto;
+}

@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://asmteam.click/asmdev/wp-json",
+    "secure": false
+  }
+}

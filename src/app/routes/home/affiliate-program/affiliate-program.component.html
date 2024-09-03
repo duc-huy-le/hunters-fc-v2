@@ -1,0 +1,63 @@
+<div class="affiliate_program_container p-4">
+  <div class="flex justify-between">
+    <div class="ref_info_box p-3">
+      <div>Link giới thiệu của bạn:</div>
+      <div>
+        <a (click)="copyRefLink()"
+          ><i class="text-[#40a9ff]">{{ userRefLink }}</i></a
+        >
+        <button
+          nz-button
+          nz-tooltip
+          nzTooltipTitle="Copy to clipboard"
+          nzType="default"
+          nzShape="circle"
+          class="ml-3"
+          (click)="copyRefLink()"
+        >
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="ref_info_box p-3 flex">
+        <div class="mr-12">Refs:</div>
+        <!-- <div class="font-bold text-[2.278vw] flex items-end">N/A</div> -->
+        <div class="font-bold text-[2.278vw] flex items-end">
+          {{ totalRef !== null ? totalRef : "N/A" }}
+        </div>
+      </div>
+      <div class="ref_info_box ml-3 p-3 flex">
+        <div class="mr-12">Hoa hồng:</div>
+        <div class="font-bold text-[2.278vw] flex items-end">{{totalCommission | number}} đ</div>
+        <!-- <div class="font-bold text-[2.278vw] flex items-end text-slate-400">
+          {{ totalCommission !== null ? totalCommission | number + " đ" : "N/A" }}
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="mt-6 font-bold text-[16px]">Lịch sử giới thiệu:</div>
+  <div class="mt-4">
+    <nz-table
+      #basicTable
+      [nzLoading]="loadingTable"
+      [nzScroll]="{ y: 'calc(100vh - 250px)' }"
+      [nzData]="listOfData"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="15%">Thời gian</th>
+          <th nzWidth="20%">Tên</th>
+          <th>Gmail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td>{{ data?.created_at | date: 'dd/MM/yyyy, HH:mm' }}</td>
+          <td>{{ data?.name }}</td>
+          <td>{{ data?.email }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

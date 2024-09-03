@@ -1,0 +1,73 @@
+<div class="ref_container p-4">
+  <div class="action_btns pb-3">
+    <div nz-row nzGutter="16">
+      <div nz-col [nzSpan]="6">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input
+            type="text"
+            nz-input
+            placeholder="Tìm kiếm quảng cáo của bạn..."
+            [ngModel]="searchAdsOfferValue"
+            (ngModelChange)="onSearchAdsOffer($event)"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
+      </div>
+      <div nz-col [nzSpan]="18" class="flex justify-end">
+        <!-- <button
+          nz-button
+          nzType="primary"
+          class="mr-2"
+          (click)="showAdsOfferModal()"
+        >
+          <i class="fas fa-plus-circle mr-2"></i>Thêm quảng cáo mới
+        </button> -->
+        <button nz-button nzType="default" (click)="reloadData()">
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- <nz-table
+    #basicTable
+    [nzLoading]="loadingTable"
+    [nzScroll]="{ y: 'calc(100vh - 250px)' }"
+    [nzData]="adsOfferList"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10%">Mã ref</th>
+        <th nzWidth="20%">Tên ref</th>
+        <th>Link ref</th>
+        <th nzWidth="15%">Ngày tạo</th>
+        <th nzWidth="10%">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>{{ data?.id }}</td>
+        <td>{{ data.name }}</td>
+        <td nzEllipsis>
+          <a target="_blank" href="{{ data.url }}">{{ data.url }}</a>
+        </td>
+        <td>{{ data.created_at | date : "dd/MM/yyyy" }}</td>
+        <td>
+          <button
+            nz-button
+            nz-tooltip
+            nzTooltipTitle="Copy to clipboard"
+            nzType="default"
+            nzShape="circle"
+            class="mr-2"
+            (click)="copyToClipboard(data.url)"
+          >
+            <i class="far fa-copy"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table> -->
+  <app-cooperate-ticket-list [listType]="AdsOfferListType.All"></app-cooperate-ticket-list>
+</div>

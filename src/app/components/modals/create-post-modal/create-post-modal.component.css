@@ -1,0 +1,36 @@
+.create_post_modal_container {
+    background-color: var(--modalOverlayColor);
+}
+
+.post_title_input {
+    border: none;
+    outline: none;
+}
+
+.post_content_textarea {
+    outline: none;
+    resize: none;
+    /* overflow: hidden; */
+}
+
+/* Custom scrollbar styling for WebKit browsers */
+.post_content_textarea::-webkit-scrollbar {
+    width: 12px;
+    /* Width of the scrollbar */
+}
+
+.post_content_textarea::-webkit-scrollbar-thumb {
+    background-color: #336699;
+    /* Color of the scrollbar handle */
+    border-radius: 10px;
+    /* Rounded corners of the scrollbar handle */
+    border: 3px solid #fff;
+    /* Adds space around the scrollbar handle */
+}
+
+.post_content_textarea::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    /* Background color of the scrollbar track */
+    border-radius: 10px;
+    /* Rounded corners of the scrollbar track */
+}

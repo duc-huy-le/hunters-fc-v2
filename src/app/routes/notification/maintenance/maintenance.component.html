@@ -1,0 +1,11 @@
+<nz-result [nzIcon]="'smile-twotone'" [nzTitle]="maintenanceMessage">
+    <div nz-result-extra>
+        <button nz-button nzType="primary" (click)="onClickContact()">Liên hệ đội ngũ support</button>
+    </div>
+</nz-result>
+<ng-template #maintenanceMessage>
+    <div class="text-center text-[16px]">
+        <p class="text-[16px]"> Hệ thống đang được bảo trì. Vui lòng quay lại sau khoảng 30 phút.</p>
+        Nếu đang trong trường hợp khẩn cấp, bạn hãy liên hệ với đội ngũ support qua Fanpage ASMLink nhé!
+    </div>
+</ng-template>
